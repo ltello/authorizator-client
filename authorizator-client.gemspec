@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.name          = "authorizator-client"
   spec.version       = Authorizator::Client::VERSION
   spec.authors       = ["Lorenzo Tello"]
-  spec.email         = ["ltello8a@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.email         = ["devteam@ideas4all.com"]
+  spec.summary       = "Ruby client for the ideas4all authorizator service"
+  spec.description   = "Ruby client for the ideas4all authorizator service"
   spec.homepage      = ""
   spec.license       = "MIT"
 
