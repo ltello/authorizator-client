@@ -24,8 +24,10 @@ module Authorizator
       client_id and client_secret # raise error unless client_id and client_secret were given
     end
 
-    # Calls the Authorizator Service talking_token endpoint and returns the currently valid talking token data
+    # Calls the Authorizator Service's talking_token endpoint and returns the currently valid talking token data
     # needed for services to be authorized to talk one another.
+    #
+    # @returns [Hash] with talking token properties.
     def talking_token
       maybe_renewing_access_token do
         access_token.get(AUTHORIZATOR_SERVICE_TALKING_TOKEN_ENDPOINT)
@@ -40,29 +42,20 @@ module Authorizator
 
       # A valid access_token to be able to talk to the Authorizator service.
       #
-      # @option service_credentials [String] :client_id (nil) the client_id value assigned to the caller service by the Authorizator service.
-      # @option service_credentials [String] :client_secret (nil) the client_secret value assigned to the caller service by the Authorizator service.
-      #
-      # @returns [OAuth2::AccessToken] instance though which access Authorizator service api endpoints.
+      # @returns [OAuth2::AccessToken] instance through which access the Authorizator service api endpoints.
       def access_token
         @access_token ||= client_application.client_credentials.get_token(:scope => SCOPE_FOR_A_SERVICE_TO_TALK_TO_AUTHORIZATOR_SERVICE)
       end
 
-      # An oauth client for a service to oauth-dialog with the Authorizator service.
-      #
-      # @option service_credentials [String] :client_id (nil) the client_id value assigned to the caller service by the Authorizator service.
-      # @option service_credentials [String] :client_secret (nil) the client_secret value assigned to the caller service by the Authorizator service.
+      # An oauth client for a service to oauth-dialog with the Authorizator service. A new one if none was previously created or
+      # a previous one if it was created.
       #
       # @returns [OAuth2::Client] instance.
       def client_application
         @client_application ||= new_client_application
       end
 
-        # Creates a new oauth client for a service to oauth-dialog with the Authorizator service.
-        #
-        # @param [String] client_id the client_id value assigned to the service after registering in the Authorizator service.
-        # @param [String] client_secret the client_secret value assigned to the service after registering in the Authorizator service.
-        # @param [String] site the Authorizator service url.
+        # Creates a new oauth client a the service to oauth-dialog with the Authorizator service.
         #
         # @returns [OAuth2::Client] instance.
         def new_client_application
