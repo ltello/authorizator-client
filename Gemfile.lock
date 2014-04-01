@@ -1,12 +1,12 @@
 PATH
   remote: .
   specs:
-    authorizator-client (0.0.1)
+    authorizator-client (0.0.2)
       oauth2 (~> 0.9.3)
 
 GEM
   remote: https://rubygems.org/
-  remote: http://eichelangelo:davinci@git.ideas4all.com:9292/
+  remote: http://michelangelo:davinci@git.ideas4all.com:9292/
   specs:
     diff-lcs (1.2.5)
     faraday (0.9.0)
