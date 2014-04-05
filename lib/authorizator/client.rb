@@ -8,7 +8,7 @@ module Authorizator
     SCOPE_FOR_A_SERVICE_TO_TALK_TO_AUTHORIZATOR_SERVICE = 'myself'
 
     # The Authorizator service's host machine root complete url.
-    AUTHORIZATOR_SERVICE_SITE = 'https://authorizator.ideas4all.com'
+    AUTHORIZATOR_SERVICE_SITE = 'http://localhost:3000'
 
     # The Authorizator service api endpoint path to get the currently valid services talking token.
     AUTHORIZATOR_SERVICE_TALKING_TOKEN_ENDPOINT = '/services/talking_token'
