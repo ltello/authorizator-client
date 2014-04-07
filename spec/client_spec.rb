@@ -13,7 +13,7 @@ describe "The authorizator-client gem is the Ruby client to give access to the i
     let(:caller_service)              {service_class.new(valid_service_client_id, valid_service_client_secret, nil)}
     let(:authorizator_service_site)   {'http://localhost:3000'}
     let(:authorizator_service)        {service_class.new(nil, nil, authorizator_service_site)}
-    let(:authorizator_client)         {Authorizator::Client.new(caller_service, authorizator_service)}
+    let(:authorizator_client)         {Authorizator::Client.new(caller_service:caller_service, authorizator_service:authorizator_service)}
     let(:valid_access_token_value)    {'567890123456789012345678901234567890'}
     let(:access_token_type)           {'bearer'}
     let(:access_token_expires_in)     {'500'}
@@ -40,19 +40,19 @@ describe "The authorizator-client gem is the Ruby client to give access to the i
       it "<caller_service> object must respond to #client_id..." do
         invalid_service_class = Struct.new(:client_secret, :site)
         caller_service        = invalid_service_class.new(valid_service_client_secret, 'http://localhost:3001')
-        expect{Authorizator::Client.new(caller_service, authorizator_service)}.to raise_error
+        expect{Authorizator::Client.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error
       end
 
       it "and #client_secret." do
         invalid_service_class = Struct.new(:client_id, :site)
         caller_service        = invalid_service_class.new(valid_service_client_id, 'http://localhost:3001')
-        expect{Authorizator::Client.new(caller_service, authorizator_service)}.to raise_error
+        expect{Authorizator::Client.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error
       end
 
       it "<authorizator_service> object must respond to #site." do
         invalid_service_class = Struct.new(:client_id, :client_secret)
         authorizator_service  = invalid_service_class.new(valid_service_client_id, valid_service_client_secret)
-        expect{Authorizator::Client.new(caller_service, authorizator_service)}.to raise_error
+        expect{Authorizator::Client.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error
       end
     end
 

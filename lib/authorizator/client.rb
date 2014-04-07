@@ -16,7 +16,8 @@ module Authorizator
 
     attr_reader :caller_service, :authorizator_service
 
-    def initialize(caller_service, authorizator_service)
+
+    def initialize(caller_service:, authorizator_service:)
       @caller_service       = caller_service
       @authorizator_service = authorizator_service
       caller_service.client_id and caller_service.client_secret and authorizator_service.site
