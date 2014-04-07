@@ -7,21 +7,19 @@ module Authorizator
     # The scope an access token must have for a service to be authorized to request resources to the Authorizator service.
     SCOPE_FOR_A_SERVICE_TO_TALK_TO_AUTHORIZATOR_SERVICE = 'myself'
 
-    # The Authorizator service's host machine root complete url.
-    AUTHORIZATOR_SERVICE_SITE = 'http://localhost:3000'
-
     # The Authorizator service api endpoint path to get the currently valid services talking token.
-    AUTHORIZATOR_SERVICE_TALKING_TOKEN_ENDPOINT = '/services/talking_token'
+    DEFAULT_AUTHORIZATOR_SERVICE_TALKING_TOKEN_ENDPOINT = '/services/talking_token'
 
     # The error codes the Authorizator service reports when receiving a request with an invalid access token.
     AUTHORIZATOR_SERVICE_INVALID_ACCESS_TOKEN_ERROR_CODES = ['Invalid Access Token']
 
 
-    attr_reader :service_credentials
+    attr_reader :caller_service, :authorizator_service
 
-    def initialize(service_credentials = {})
-      @service_credentials = service_credentials.dup
-      client_id and client_secret # raise error unless client_id and client_secret were given
+    def initialize(caller_service, authorizator_service)
+      @caller_service       = caller_service
+      @authorizator_service = authorizator_service
+      caller_service.client_id and caller_service.client_secret and authorizator_service.site
     end
 
     # Calls the Authorizator Service's talking_token endpoint and returns the currently valid talking token data
@@ -30,15 +28,12 @@ module Authorizator
     # @returns [Hash] with talking token properties.
     def talking_token
       maybe_renewing_access_token do
-        access_token.get(AUTHORIZATOR_SERVICE_TALKING_TOKEN_ENDPOINT)
+        access_token.get(talking_token_endpoint)
       end.parsed
     end
 
 
     private
-
-      def client_id;     service_credentials.fetch(:client_id)     end
-      def client_secret; service_credentials.fetch(:client_secret) end
 
       # A valid access_token to be able to talk to the Authorizator service.
       #
@@ -59,7 +54,7 @@ module Authorizator
         #
         # @returns [OAuth2::Client] instance.
         def new_client_application
-          OAuth2::Client.new(client_id, client_secret, :site => AUTHORIZATOR_SERVICE_SITE, :raise_errors => false)
+          OAuth2::Client.new(caller_service.client_id, caller_service.client_secret, :site => authorizator_service.site, :raise_errors => false)
         end
 
       # Calls the given block retrying once if the first response included an invalid access token error.
@@ -72,6 +67,13 @@ module Authorizator
           resp = block.call
         end
         resp
+      end
+
+      # The relative path of the Authorizator service url that gives you a valid talking token.
+      #
+      # @returns [String] instance. i.e. /services/talking_token
+      def talking_token_endpoint
+        authorizator_service.respond_to?(:talking_token_endpoint) ? authorizator_service.talking_token_endpoint : DEFAULT_AUTHORIZATOR_SERVICE_TALKING_TOKEN_ENDPOINT
       end
 
   end

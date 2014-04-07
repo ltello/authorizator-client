@@ -9,10 +9,11 @@ describe "The authorizator-client gem is the Ruby client to give access to the i
   context "Authorizator::Client: the Authorizator service api resources are provided via this class." do
     let(:valid_service_client_id)     {'12345'}
     let(:valid_service_client_secret) {'67890'}
-    let(:valid_service_credentials)   {{:client_id     => valid_service_client_id,
-                                        :client_secret => valid_service_client_secret}}
-    let(:authorizator_client)         {Authorizator::Client.new(valid_service_credentials)}
-    let(:authorizator_service_site)   {Authorizator::Client::AUTHORIZATOR_SERVICE_SITE}
+    let(:service_class)               {Struct.new(:client_id, :client_secret, :site)}
+    let(:caller_service)              {service_class.new(valid_service_client_id, valid_service_client_secret, nil)}
+    let(:authorizator_service_site)   {'http://localhost:3000'}
+    let(:authorizator_service)        {service_class.new(nil, nil, authorizator_service_site)}
+    let(:authorizator_client)         {Authorizator::Client.new(caller_service, authorizator_service)}
     let(:valid_access_token_value)    {'567890123456789012345678901234567890'}
     let(:access_token_type)           {'bearer'}
     let(:access_token_expires_in)     {'500'}
@@ -32,19 +33,38 @@ describe "The authorizator-client gem is the Ruby client to give access to the i
     let(:new_client_application)      {double(:client_credentials => double(:get_token => valid_access_token_data))}
 
     context "- Instantiation:" do
-      it "To create an Authorizator::Client instance you must provide at least two option params: :client_id and :client_secret" do
+      it "To create an Authorizator::Client instance you must provide two objects: <caller_service> and <authorizator_service>" do
         expect(authorizator_client).to be_an(Authorizator::Client)
       end
 
-      it "An error will be raised otherwise" do
-        expect{Authorizator::Client.new}.to raise_error
+      it "<caller_service> object must respond to #client_id..." do
+        invalid_service_class = Struct.new(:client_secret, :site)
+        caller_service        = invalid_service_class.new(valid_service_client_secret, 'http://localhost:3001')
+        expect{Authorizator::Client.new(caller_service, authorizator_service)}.to raise_error
+      end
+
+      it "and #client_secret." do
+        invalid_service_class = Struct.new(:client_id, :site)
+        caller_service        = invalid_service_class.new(valid_service_client_id, 'http://localhost:3001')
+        expect{Authorizator::Client.new(caller_service, authorizator_service)}.to raise_error
+      end
+
+      it "<authorizator_service> object must respond to #site." do
+        invalid_service_class = Struct.new(:client_id, :client_secret)
+        authorizator_service  = invalid_service_class.new(valid_service_client_id, valid_service_client_secret)
+        expect{Authorizator::Client.new(caller_service, authorizator_service)}.to raise_error
       end
     end
 
     context "- Interface" do
-      context "#service_credentials" do
-        it "returns a hash with keys :client_id and :client_secret corresponding to the service accessing the Authorizator" do
-          expect(authorizator_client.service_credentials).to eq(valid_service_credentials)
+      context "#caller_service" do
+        it "returns an object representing to the service accessing the Authorizator" do
+          expect(authorizator_client.caller_service).to eq(caller_service)
+        end
+      end
+      context "#authorizator_service" do
+        it "returns an object representing the Authorizator service" do
+          expect(authorizator_client.authorizator_service).to eq(authorizator_service)
         end
       end
 
@@ -64,6 +84,9 @@ describe "The authorizator-client gem is the Ruby client to give access to the i
             expect(client_application_cache).not_to be_nil
           end
         end
+
+        it "check when authorizator_service respond and overwrite #talking_token_endpoint", pending:true do end
+        it "check when authorizator_service not respond to #talking_token_endpoint. Must use default", pending:true do end
       end
     end
   end
