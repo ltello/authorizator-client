@@ -10,6 +10,9 @@ module Authorizator
     # The Authorizator service api endpoint path to get the currently valid services talking token.
     DEFAULT_AUTHORIZATOR_SERVICE_TALKING_TOKEN_ENDPOINT = '/services/talking_token'
 
+    # The Authorizator service api endpoint path to get the list of services secured by the Authorizator.
+    DEFAULT_AUTHORIZATOR_SERVICE_SERVICES_ENDPOINT = '/services'
+
     # The error codes the Authorizator service reports when receiving a request with an invalid access token.
     AUTHORIZATOR_SERVICE_INVALID_ACCESS_TOKEN_ERROR_CODES = ['Invalid Access Token']
 
@@ -30,6 +33,16 @@ module Authorizator
     def talking_token
       maybe_renewing_access_token do
         access_token.get(talking_token_endpoint)
+      end.parsed
+    end
+
+    # Calls the Authorizator Service's talking_token endpoint and returns the currently valid talking token data
+    # needed for services to be authorized to talk one another.
+    #
+    # @returns [Hash] with talking token properties.
+    def services
+      maybe_renewing_access_token do
+        access_token.get(services_endpoint)
       end.parsed
     end
 
@@ -75,6 +88,13 @@ module Authorizator
       # @returns [String] instance. i.e. /services/talking_token
       def talking_token_endpoint
         authorizator_service.respond_to?(:talking_token_endpoint) ? authorizator_service.talking_token_endpoint : DEFAULT_AUTHORIZATOR_SERVICE_TALKING_TOKEN_ENDPOINT
+      end
+
+      # The relative path of the Authorizator service url that gives you the list of services secured by the Authorizator..
+      #
+      # @returns [String] instance. i.e. /services/services
+      def services_endpoint
+        authorizator_service.respond_to?(:services_endpoint) ? authorizator_service.services_endpoint : DEFAULT_AUTHORIZATOR_SERVICE_SERVICES_ENDPOINT
       end
 
   end
