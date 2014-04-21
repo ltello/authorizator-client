@@ -60,7 +60,7 @@ describe "The authorizator-client gem is the Ruby client to give access to the i
     context "- Interface" do
 
       context "#caller_service" do
-        it "returns an object representing to the service accessing the Authorizator" do
+        it "returns an object representing the service accessing the Authorizator" do
           expect(authorizator_client.caller_service).to eq(caller_service)
         end
       end
