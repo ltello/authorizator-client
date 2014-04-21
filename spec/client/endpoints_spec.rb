@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'client/endpoints/talking_token_spec'
+require 'client/endpoints/services_spec'
 
 describe 'Endpoints are the urls where a service exposes resources (api). A service client make http requests to these
           paths to interact with the service api.' do
@@ -9,21 +11,14 @@ describe 'Endpoints are the urls where a service exposes resources (api). A serv
   let(:authorizator_service_site)      {'http://localhost:3000'}
   let(:authorizator_service)           {service_class.new(nil, nil, authorizator_service_site)}
   let(:authorizator_client)            {Authorizator::Client.new(caller_service:caller_service, authorizator_service:authorizator_service)}
+  let(:access_token)                   {double}
+  before(:each) do
+    authorizator_client.stub(:access_token).and_return(access_token)
+  end
 
-  context 'The authorizator-client gem must define and expose the following methods to access the Authorizator service endpoints:' do
-    context '#talking_token:' do
-      it 'returns a hash with the data valid for the ideas4all services to talk to each other' do
-        expect(authorizator_client).to respond_to(:talking_token)
-        expect(authorizator_client.private_methods).to include(:talking_token_endpoint)
-      end
-    end
-
-    context '#services:' do
-      it 'returns a list of ideas4all services data' do
-        expect(authorizator_client).to respond_to(:services)
-        expect(authorizator_client.private_methods).to include(:services_endpoint)
-      end
-    end
+  context 'The authorizator-client gem exposes the following methods to access the corresponding Authorizator service endpoints:' do
+    include_context '#talking_token:'
+    include_context '#services:'
   end
 
 end

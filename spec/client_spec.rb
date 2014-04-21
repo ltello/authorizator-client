@@ -73,13 +73,15 @@ describe "The authorizator-client gem is the Ruby client to give access to the i
 
       context "#talking_token: every pair of ideas4all services need a talking token to be able to communicate each other.
                This token is returned by the Authorizator service only to its previously registered services." do
-        it "should return a hash with talking token data, including :access_token, :token_type, :expires_in, :scope" do
+        it "returns a hash with talking token data, including :access_token, :token_type, :expires_in, :scope.
+            Run tests in client/endpoints_spec for detailed info." do
           expect(authorizator_client).to respond_to(:talking_token)
         end
       end
 
       context "#services: the Authorizator api offers a list of ideas4all services that it secures." do
-        it "should return a list of the form: {services: [{name: 'service1', site: 'https://..'}, ... ,{}]}" do
+        it "returns a list of the form: {services: [{name: 'service1', site: 'https://..'}, ... ,{}]}.
+            Run tests in client/endpoints_spec for detailed info." do
           expect(authorizator_client).to respond_to(:services)
         end
       end

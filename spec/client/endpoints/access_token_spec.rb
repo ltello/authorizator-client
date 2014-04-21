@@ -55,13 +55,13 @@ describe "An access token is an object whose value must be included in the Autho
       it "An invalid access token error is raised if no remote access token can be obtained..." do
         invalid_client_application = double(:client_credentials => double(:get_token => nil))
         OAuth2::Client.stub(:new).and_return(invalid_client_application)
-        expect{Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error(Authorizator::Client::Endpoints::AccessToken::Error)
+        expect{Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error(Authorizator::Client::Endpoints::Response::Error::AccessToken)
       end
 
       it "... or a void one is received." do
         invalid_client_application = double(:client_credentials => double(get_token: double(token: "", params: {p1: "p1-value"}, to_hash: {})))
         OAuth2::Client.stub(:new).and_return(invalid_client_application)
-        expect{Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error(Authorizator::Client::Endpoints::AccessToken::Error, /p1-value/)
+        expect{Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error(Authorizator::Client::Endpoints::Response::Error::AccessToken, /p1-value/)
       end
     end
 

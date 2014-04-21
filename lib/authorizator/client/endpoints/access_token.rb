@@ -1,4 +1,5 @@
 require 'oauth2'
+require 'authorizator/client/endpoints/response/error/access_token'
 
 module Authorizator
   class Client
@@ -17,7 +18,7 @@ module Authorizator
 
         # A valid access_token to be able to talk to the Authorizator service.
         #
-        # @returns [Authorizator::Client::Endpoints::AccessToken] instance through which access the Authorizator service api endpoints.
+        # @return [Authorizator::Client::Endpoints::AccessToken] instance through which access the Authorizator service api endpoints.
         def initialize(caller_service:, authorizator_service:)
           @caller_service       = caller_service
           @authorizator_service = authorizator_service
@@ -31,24 +32,24 @@ module Authorizator
 
           # The remote oauth access token got from the Authorizator service.
           #
-          # @returns [OAuth2::AccessToken] instance.
+          # @return [OAuth2::AccessToken] instance.
           def remote_oauth_token
             token = client_application.client_credentials.get_token(:scope => SCOPE_FOR_A_SERVICE_TO_TALK_TO_AUTHORIZATOR_SERVICE)
-            raise Error.new(token && token.params) if (!token or token.token.empty?)
+            raise Response::Error::AccessToken.new(data:(token && token.params)) if (!token or token.token.empty?)
             token
           end
 
           # An oauth client for a service to oauth-dialog with the Authorizator service. A new one if none was previously created or
           # a previous one if it was created.
           #
-          # @returns [OAuth2::Client] instance.
+          # @return [OAuth2::Client] instance.
           def client_application
             @client_application ||= new_client_application
           end
 
           # Creates a new oauth client a the service to oauth-dialog with the Authorizator service.
           #
-          # @returns [OAuth2::Client] instance.
+          # @return [OAuth2::Client] instance.
           def new_client_application
             OAuth2::Client.new(caller_service.client_id, caller_service.client_secret, :site => authorizator_service.site, :raise_errors => false)
           end
@@ -58,5 +59,3 @@ module Authorizator
     end
   end
 end
-
-require 'authorizator/client/endpoints/access_token/error'

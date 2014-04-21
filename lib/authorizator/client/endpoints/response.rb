@@ -1,9 +1,12 @@
+require 'authorizator/client/endpoints/response/error_checking'
+
 module Authorizator
   class Client
     module Endpoints
 
 
       module Response
+        include ErrorChecking
 
         private
 
@@ -11,6 +14,8 @@ module Authorizator
           AUTHORIZATOR_SERVICE_INVALID_ACCESS_TOKEN_ERROR_CODES = ['Invalid Access Token']
 
           # Checks whether a response from the Authorizator service states an error or not.
+          #
+          # @return [false, Object]: an error code or false if not invalid response.
           def invalid_access_token_response?(resp)
             return false unless (resp.respond_to?(:error) and resp.error)
             return resp.error.code if AUTHORIZATOR_SERVICE_INVALID_ACCESS_TOKEN_ERROR_CODES.include?(resp.error.code)

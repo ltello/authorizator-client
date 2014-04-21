@@ -12,7 +12,7 @@ module Authorizator
         # the given path otherwise.
         #
         # @option endpoint [Symbol] :any_name given to the endpoint being its value the relative path of the endpoint.
-        # @returns [String] the relative path where to access the endpoint in the service url.
+        # @return [String] the relative path where to access the endpoint in the service url.
         def endpoint(endpoint = {})
           endpoint_key           = endpoint.keys.first
           endpoint_path          = endpoint[endpoint_key]
