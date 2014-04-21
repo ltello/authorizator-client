@@ -23,7 +23,7 @@ module Authorizator
         # needed for services to be authorized to talk one another.
         #
         # @return [Hash] with talking token properties.
-        # @see #check_received_talking_token_endpoint_data! for exact properties format.
+        # @see #check_received_talking_token_endpoint_data! #check_received_talking_token_endpoint_data! for exact properties format.
         def talking_token
           remote_talking_token_data = maybe_renewing_access_token {access_token.get(talking_token_endpoint)}.parsed
           check_received_talking_token_endpoint_data!(remote_talking_token_data)
@@ -33,7 +33,7 @@ module Authorizator
         # is providing talking security.
         #
         # @return [Hash] with services properties.
-        # @see #check_received_services_endpoint_data! for exact properties format.
+        # @see #check_received_services_endpoint_data! #check_received_services_endpoint_data! for exact properties format.
         def services
           remote_services_data = maybe_renewing_access_token {access_token.get(services_endpoint)}.parsed
           check_received_services_endpoint_data!(remote_services_data)['services']

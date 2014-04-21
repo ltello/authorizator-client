@@ -1,6 +1,12 @@
 # Authorizator::Client
 
-TODO: Write a gem description
+The authorizator-client gem is the Ruby client to give access to the ideas4all's Authorizator service to other services. It:
+
+  - gives the caller access to the Authorizator service's api through common Ruby modules, classes and methods.
+  - communicates with the Authorizator service's api via the OAuth2 protocol,
+  - take care of security concerns in a transparent way to the caller,
+  - parses responses and returns plain Ruby objects from the http json responses.
+
 
 ## Installation
 
@@ -18,12 +24,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Run
 
-## Contributing
+    bundle exec rspec spec/README_FOR_USERS_spec.rb
 
-1. Fork it ( http://github.com/<my-github-username>/authorizator-client/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+test to see info of how to use this gem.
+
