@@ -38,6 +38,12 @@ describe "The authorizator-client gem is the Ruby client to give access to the i
         expect(authorizator_client).to be_an(Authorizator::Client)
       end
 
+      it "An error will be raised otherwise." do
+        expect{Authorizator::Client.new}.to raise_error
+        expect{Authorizator::Client.new(caller_service: caller_service)}.to raise_error(ArgumentError)
+        expect{Authorizator::Client.new(authorizator_service: authorizator_service)}.to raise_error(ArgumentError)
+      end
+
       it "<caller_service> object must respond to #client_id..." do
         invalid_service_class = Struct.new(:client_secret, :site)
         caller_service        = invalid_service_class.new(valid_service_client_secret, 'http://localhost:3001')

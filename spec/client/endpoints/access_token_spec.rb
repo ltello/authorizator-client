@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "An access token is an object whose value must be included in the Authorization header of any request
-          to the Authorizator service for it to give access to its protected resouces (api) to external caller services." do
+          to the Authorizator service for it to give access to its protected resources (api) to external caller services." do
 
   context "Authorizator::Client::Endpoints::AccessToken: is the class representing obtained access tokens from the
            Authorizator Service:" do
