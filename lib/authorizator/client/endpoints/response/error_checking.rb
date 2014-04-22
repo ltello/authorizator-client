@@ -1,3 +1,5 @@
+require 'authorizator/client/endpoints/response/error/data'
+
 module Authorizator
   class Client
     module Endpoints

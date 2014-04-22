@@ -1,6 +1,5 @@
 require 'authorizator/client/endpoints/dsl'
 require 'authorizator/client/endpoints/request'
-require 'authorizator/client/endpoints/response/error/data'
 
 
 module Authorizator
