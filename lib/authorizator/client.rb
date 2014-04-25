@@ -2,6 +2,8 @@ require "authorizator/client/version"
 require "authorizator/client/public_interface"
 
 module Authorizator
+
+  # @see spec/README_FOR_* files for documentation of how to use this gem!.
   class Client
     include PublicInterface
 

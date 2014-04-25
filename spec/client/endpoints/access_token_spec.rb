@@ -37,31 +37,31 @@ describe "An access token is an object whose value must be included in the Autho
       it "<caller_service> object must respond to #client_id..." do
         invalid_service_class = Struct.new(:client_secret, :site)
         caller_service        = invalid_service_class.new(service_client_secret, 'http://localhost:3001')
-        expect{Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error
+        expect {Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error
       end
 
       it "and #client_secret." do
         invalid_service_class = Struct.new(:client_id, :site)
         caller_service        = invalid_service_class.new(service_client_id, 'http://localhost:3001')
-        expect{Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error
+        expect {Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error
       end
 
       it "<authorizator_service> object must respond to #site." do
         invalid_service_class = Struct.new(:client_id, :client_secret)
         authorizator_service  = invalid_service_class.new(service_client_id, service_client_secret)
-        expect{Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error
+        expect {Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error
       end
 
       it "An invalid access token error is raised if no remote access token can be obtained..." do
         invalid_client_application = double(:client_credentials => double(:get_token => nil))
         OAuth2::Client.stub(:new).and_return(invalid_client_application)
-        expect{Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error(Authorizator::Client::Endpoints::Response::Error::AccessToken)
+        expect {Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error(Authorizator::Client::Endpoints::Response::Error::AccessToken)
       end
 
       it "... or a void one is received." do
         invalid_client_application = double(:client_credentials => double(get_token: double(token: "", params: {p1: "p1-value"}, to_hash: {})))
         OAuth2::Client.stub(:new).and_return(invalid_client_application)
-        expect{Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error(Authorizator::Client::Endpoints::Response::Error::AccessToken, /p1-value/)
+        expect {Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error(Authorizator::Client::Endpoints::Response::Error::AccessToken, /p1-value/)
       end
     end
 

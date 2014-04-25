@@ -41,8 +41,8 @@ describe 'Requests to the Authorizator endpoints are made via an Authorizator::C
       end
 
       it 'The next calls return the previously stored access token.' do
-        expect{authorizator_client.send(:access_token)}.not_to change {authorizator_client.instance_variable_get(:@access_token)}
-        expect{authorizator_client.send(:access_token)}.not_to change {authorizator_client.instance_variable_get(:@access_token)}
+        expect {authorizator_client.send(:access_token)}.not_to change {authorizator_client.instance_variable_get(:@access_token)}
+        expect {authorizator_client.send(:access_token)}.not_to change {authorizator_client.instance_variable_get(:@access_token)}
         expect(authorizator_client.send(:access_token)).to eq(authorizator_client.send(:access_token))
       end
     end
