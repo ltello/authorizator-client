@@ -13,7 +13,7 @@ describe "An access token is an object whose value must be included in the Autho
     let(:authorizator_service)           {service_class.new(nil, nil, authorizator_service_site)}
     let(:oauth_access_token_value)       {'567890123456789012345678901234567890'}
     let(:oauth_access_token_type)        {'bearer'}
-    let(:oauth_access_token_expires_in)  {'500'}
+    let(:oauth_access_token_expires_in)  {500}
     let(:oauth_access_token_scope)       {'myself'}
     let(:oauth_access_token_data)        {{'access_token' => oauth_access_token_value,
                                            'token_type'   => oauth_access_token_type,

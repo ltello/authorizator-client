@@ -16,7 +16,7 @@ describe "The authorizator-client gem is the Ruby client to give access to the i
     let(:authorizator_client)         {Authorizator::Client.new(caller_service:caller_service, authorizator_service:authorizator_service)}
     let(:valid_access_token_value)    {'567890123456789012345678901234567890'}
     let(:access_token_type)           {'bearer'}
-    let(:access_token_expires_in)     {'500'}
+    let(:access_token_expires_in)     {500}
     let(:access_token_scope)          {'myself'}
     let(:valid_access_token_data)     {{'access_token' => valid_access_token_value,
                                         'token_type'   => access_token_type,
@@ -25,7 +25,7 @@ describe "The authorizator-client gem is the Ruby client to give access to the i
     let(:valid_access_token)          {Authorizator::Client::Endpoints::AccessToken.from_hash(nil, valid_access_token_data)}
     let(:valid_talking_token_value)   {'1234567890123456789012345678901234567890'}
     let(:talking_token_type)          {'bearer'}
-    let(:talking_token_expires_in)    {'1000'}
+    let(:talking_token_expires_in)    {1000}
     let(:talking_token_scope)         {'service_mate'}
     let(:valid_talking_token_data)    {{'access_token' => valid_talking_token_value,
                                         'token_type'   => talking_token_type,

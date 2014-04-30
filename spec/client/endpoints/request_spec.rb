@@ -11,7 +11,7 @@ describe 'Requests to the Authorizator endpoints are made via an Authorizator::C
   let(:authorizator_client)            {Authorizator::Client.new(caller_service:caller_service, authorizator_service:authorizator_service)}
   let(:oauth_access_token_value)       {'567890123456789012345678901234567890'}
   let(:oauth_access_token_type)        {'bearer'}
-  let(:oauth_access_token_expires_in)  {'500'}
+  let(:oauth_access_token_expires_in)  {500}
   let(:oauth_access_token_scope)       {'myself'}
   let(:oauth_access_token_data)        {{'access_token' => oauth_access_token_value,
                                          'token_type'   => oauth_access_token_type,
@@ -56,7 +56,7 @@ describe 'Requests to the Authorizator endpoints are made via an Authorizator::C
            service).' do
     let(:valid_talking_token_value)  {'1234567890123456789012345678901234567890'}
     let(:talking_token_type)         {'bearer'}
-    let(:talking_token_expires_in)   {'1000'}
+    let(:talking_token_expires_in)   {1000}
     let(:talking_token_scope)        {'service_mate'}
     let(:valid_talking_token_data)   {{'access_token' => valid_talking_token_value,
                                        'token_type'   => talking_token_type,

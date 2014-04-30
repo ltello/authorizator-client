@@ -41,15 +41,15 @@ describe "Run README_FOR_USERS test to learn the goals of this gem for a user!
                     # Checks received talking token data format from Authorizator service, raising errors if any check fails:
                     # Format must be: {'access_token' => 'no_empty_string',
                     #                  'token_type'   => 'bearer',
-                    #                  'expires_in'   => 'positive number string',
+                    #                  'expires_in'   => 'positive number',
                     #                  'scope'        => 'service_mate'}
                     # @return [Object] talking_token_data if every check is ok!.
                     def check_received_talking_token_endpoint_data!(data)
                       [:access_token, :token_type, :expires_in, :scope].each {|key| check_key_present_in_endpoint_data! key:key,  data:data, endpoint: :talking_token}
-                      check_key_value_is_no_empty_string_in_endpoint_data!        key:'access_token', value:data['access_token'], data:data, endpoint: :talking_token
-                      check_key_value_is_some_fix_value_in_endpoint_data!         key:'token_type',   value:data['token_type'],   data:data, endpoint: :talking_token, must_be:'bearer'
-                      check_key_value_is_positive_number_string_in_endpoint_data! key:'expires_in',   value:data['expires_in'],   data:data, endpoint: :talking_token
-                      check_key_value_is_some_fix_value_in_endpoint_data!         key:'scope',        value:data['scope'],        data:data, endpoint: :talking_token, must_be:'service_mate'
+                      check_key_value_is_no_empty_string_in_endpoint_data! key:'access_token', value:data['access_token'], data:data, endpoint: :talking_token
+                      check_key_value_is_some_fix_value_in_endpoint_data!  key:'token_type',   value:data['token_type'],   data:data, endpoint: :talking_token, must_be:'bearer'
+                      check_key_value_is_positive_number_in_endpoint_data! key:'expires_in',   value:data['expires_in'],   data:data, endpoint: :talking_token
+                      check_key_value_is_some_fix_value_in_endpoint_data!  key:'scope',        value:data['scope'],        data:data, endpoint: :talking_token, must_be:'service_mate'
                       data
                     end
 

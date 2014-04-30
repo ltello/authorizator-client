@@ -25,9 +25,9 @@ module Authorizator
               raise_invalid_value_in_data(key: key, value: value, must_be: 'no empty string', data: data, endpoint: endpoint) unless (value.is_a?(String) and !value.empty?)
             end
 
-            # Raises an Error::Data exception if the given :key :value from :endpoint :data is not a positive number String instance.
-            def check_key_value_is_positive_number_string_in_endpoint_data!(key:, value:, data:, endpoint:)
-              raise_invalid_value_in_data(key: key, value: value, must_be: 'positive number as string', data: data, endpoint: endpoint) unless (value.is_a?(String) and value.to_i > 0)
+            # Raises an Error::Data exception if the given :key :value from :endpoint :data is not a positive number instance.
+            def check_key_value_is_positive_number_in_endpoint_data!(key:, value:, data:, endpoint:)
+              raise_invalid_value_in_data(key: key, value: value, must_be: 'positive number', data: data, endpoint: endpoint) unless (value.is_a?(Fixnum) and value.to_i > 0)
             end
 
             # Raises an Error::Data exception if the given :key :value from :endpoint :data is not a specific :must_be value.
