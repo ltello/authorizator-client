@@ -12,7 +12,7 @@ module Authorizator
 
             # Raises an Error::Data exception if the given :key from :endpoint :data is missing.
             def check_key_present_in_endpoint_data!(key:, data:, endpoint:)
-              raise_missing_key_in_data(key: key, data: data, endpoint: endpoint) unless data.has_key?(key.to_s)
+              raise_missing_key_in_data(key: key, data: data, endpoint: endpoint) unless (data.is_a?(Hash) and data.has_key?(key.to_s))
             end
 
             # Raises an Error::Data exception if the given :key :value from :endpoint :data is not an Array instance.

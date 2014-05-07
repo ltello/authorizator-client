@@ -14,6 +14,7 @@ shared_context '#talking_token:' do
 
     shared_examples "an invalid data response..." do |title|
       it title do
+        allow_message_expectations_on_nil
         access_token.stub(:get).with(talking_token_endpoint_path).and_return(subject)
         subject.stub(:parsed).and_return(subject)
         expect {authorizator_client.talking_token}.to raise_error(Authorizator::Client::Endpoints::Response::Error::Data)
@@ -26,6 +27,10 @@ shared_context '#talking_token:' do
       expect(authorizator_client).to                 respond_to(:talking_token)
       expect(authorizator_client.private_methods).to include(:talking_token_endpoint)
       expect(authorizator_client.talking_token).to   eq(valid_talking_token_data)
+    end
+
+    it_behaves_like "an invalid data response...", "...unless the data returned is a Hash instance." do
+      subject {}
     end
 
     context 'The hash returned contains, at least data for the token itself:' do
