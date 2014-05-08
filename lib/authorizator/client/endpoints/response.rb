@@ -11,7 +11,7 @@ module Authorizator
         private
 
           # The error codes the Authorizator service reports when receiving a request with an invalid access token.
-          AUTHORIZATOR_SERVICE_INVALID_ACCESS_TOKEN_ERROR_CODES = ['Invalid Access Token']
+          AUTHORIZATOR_SERVICE_INVALID_ACCESS_TOKEN_ERROR_CODES = ['invalid_token', 'invalid_access_token']
 
           # Checks whether a response from the Authorizator service states an error or not.
           #
