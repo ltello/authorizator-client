@@ -1,6 +1,8 @@
 require 'spec_helper'
 
+
 shared_context '#talking_token:' do
+
   context '#talking_token:' do
     let(:talking_token_endpoint_path) {'/services/talking_token'}
     let(:valid_talking_token_value)   {'1234567890123456789012345678901234567890'}

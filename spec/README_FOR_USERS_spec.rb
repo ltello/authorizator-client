@@ -1,12 +1,9 @@
 require 'spec_helper'
 
-describe "The authorizator-client gem is the Ruby client to give access to the ideas4all's Authorizator service to other services. It:
-              - gives the caller access to the Authorizator service's api through common Ruby modules, classes and methods.
-              - communicates with the Authorizator service's api via the OAuth2 protocol,
-              - take care of security concerns in a transparent way to the caller,
-              - parses responses and returns plain Ruby objects from the http json responses.
 
-          To use the gem, instantiate the class Authorizator::Client:
+shared_context "as a user:" do
+
+  context "To use the gem, instantiate the class Authorizator::Client:
 
               ac = Authorizator::Client.new(caller_service:caller_service, authorizator_service:authorizator_service)
 
@@ -24,7 +21,6 @@ describe "The authorizator-client gem is the Ruby client to give access to the i
              ac.talking_token        #=> the current valid talking token data a service needs to include in requests to
                                          other services to be accepted and answered.
              ac.services             #=> a list of services data the Authorizator service controls and enable talking." do
-  it "" do
-    expect(true).to be_true
+    it " " do end
   end
 end
