@@ -1,6 +1,3 @@
-require 'spec_helper'
-
-
 shared_context "request" do
 
   describe 'Requests to the Authorizator endpoints are made via an Authorizator::Client::Endpoints::AccessToken instance
@@ -26,8 +23,8 @@ shared_context "request" do
                                                                                            authorizator_service: authorizator_service)}
 
     before(:each) do
-      new_client_application.stub(:client_credentials => double(:get_token => oauth_access_token))
-      OAuth2::Client.stub(:new).and_return(new_client_application)
+      allow(new_client_application).to receive(:client_credentials).and_return(double(:get_token => oauth_access_token))
+      allow(OAuth2::Client).to receive(:new).and_return(new_client_application)
     end
 
     context '#access_token:' do
@@ -67,11 +64,11 @@ shared_context "request" do
                                          'scope'        => talking_token_scope}}
       let(:invalid_talking_token_data) {double(:error => double(:code => Authorizator::Client::Endpoints::Response::AUTHORIZATOR_SERVICE_INVALID_ACCESS_TOKEN_ERROR_CODES.first))}
       before(:each) do
-        valid_talking_token_data.stub(:parsed).and_return(valid_talking_token_data)
+        allow(valid_talking_token_data).to receive(:parsed).and_return(valid_talking_token_data)
       end
 
       it '#maybe_renewing_access_token executes the given block once...' do
-        authorizator_client.send(:access_token).stub(:get).with('/services/talking_token').and_return(valid_talking_token_data)
+        allow(authorizator_client.send(:access_token)).to receive(:get).with('/services/talking_token').and_return(valid_talking_token_data)
         block = Proc.new {authorizator_client.send(:access_token).get(authorizator_client.send(:talking_token_endpoint))}
         authorizator_client.send(:maybe_renewing_access_token, &block)
         expect(authorizator_client.send(:access_token)).to have_received(:get).once
@@ -81,7 +78,7 @@ shared_context "request" do
         calls_to_block = 0
         block = Proc.new do
           calls_to_block += 1
-          authorizator_client.send(:access_token).stub(:get).with('/services/talking_token').and_return(invalid_talking_token_data)
+          allow(authorizator_client.send(:access_token)).to receive(:get).with('/services/talking_token').and_return(invalid_talking_token_data)
           authorizator_client.send(:access_token).get(authorizator_client.send(:talking_token_endpoint))
         end
         expect {authorizator_client.send(:maybe_renewing_access_token, &block)}.to raise_error

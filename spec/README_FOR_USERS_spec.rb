@@ -1,6 +1,3 @@
-require 'spec_helper'
-
-
 shared_context "as a user:" do
 
   context "To use the gem, instantiate the class Authorizator::Client:

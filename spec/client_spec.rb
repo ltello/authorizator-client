@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'client/endpoints_spec'
 require 'client/public_interface_spec'
 require 'client/endpoints/request_spec'

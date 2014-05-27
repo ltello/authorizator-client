@@ -1,7 +1,3 @@
-require 'spec_helper'
-
-
-
 shared_context "dsl" do
 
   describe 'The following DSL helps the authorizator-client to define endpoints associated to the ones in the Authorizator service.' do
@@ -29,7 +25,7 @@ shared_context "dsl" do
       end
 
       it "...or the path stated in the client's authorizator_service object if it overides the methodname and therefore the path." do
-        authorizator_service.stub(:new_resource_endpoint).and_return(new_resource_endpoint_another_path)
+        allow(authorizator_service).to receive(:new_resource_endpoint).and_return(new_resource_endpoint_another_path)
         expect(authorizator_client.send(:new_resource_endpoint)).to be(new_resource_endpoint_another_path)
       end
     end

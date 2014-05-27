@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe "The authorizator-client gem is the Ruby client to give access to the ideas4all's Authorizator service to other services. It:
               - gives the caller access to the Authorizator service's api through common Ruby modules, classes and methods.
               - communicates with the Authorizator service's api via the OAuth2 protocol,

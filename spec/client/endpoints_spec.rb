@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'client/endpoints/talking_token_spec'
 require 'client/endpoints/services_spec'
 
@@ -16,7 +15,7 @@ shared_context 'endpoints' do
     let(:authorizator_client)            {Authorizator::Client.new(caller_service:caller_service, authorizator_service:authorizator_service)}
     let(:access_token)                   {double}
     before(:each) do
-      authorizator_client.stub(:access_token).and_return(access_token)
+      allow(authorizator_client).to receive(:access_token).and_return(access_token)
     end
 
     context 'The authorizator-client gem exposes the following methods to access the corresponding Authorizator service endpoints:' do

@@ -1,6 +1,3 @@
-require 'spec_helper'
-
-
 shared_context "response" do
 
   describe 'The response of the Authorizator to a request to access its api, differs depending on the request,
@@ -24,7 +21,7 @@ shared_context "response" do
 
     context '#invalid_access_token_response?(resp):' do
       it 'does not check the response headers if the response object dont respond to #headers.' do
-        Regexp.stub(:new).and_return(nil)
+        allow(Regexp).to receive(:new).and_return(nil)
         authorizator_client.send(:invalid_access_token_response?, no_http_response)
         expect(Regexp).not_to have_received(:new)
       end
@@ -34,11 +31,11 @@ shared_context "response" do
       end
 
       it 'returns false when the response do not respond to #error...' do
-        expect(authorizator_client.send(:invalid_access_token_response?, no_error_responding_response)).to be_false
+        expect(authorizator_client.send(:invalid_access_token_response?, no_error_responding_response)).to be_falsey
       end
 
       it '... or the error object is present.' do
-        expect(authorizator_client.send(:invalid_access_token_response?, error_blank_response)).to be_false
+        expect(authorizator_client.send(:invalid_access_token_response?, error_blank_response)).to be_falsey
       end
 
       it 'Returns the error code when the response.error.code is one of the invalid access token ones...' do
@@ -46,7 +43,7 @@ shared_context "response" do
       end
 
       it 'In any other case, invalid_access_token_response? should be false' do
-        expect(authorizator_client.send(:invalid_access_token_response?, no_invalid_access_token_error_response)).to be_false
+        expect(authorizator_client.send(:invalid_access_token_response?, no_invalid_access_token_error_response)).to be_falsey
       end
     end
   end

@@ -1,6 +1,3 @@
-require 'spec_helper'
-
-
 shared_context "access token" do
 
   describe "An access token is an object whose value must be included in the Authorization header of any request
@@ -28,12 +25,12 @@ shared_context "access token" do
                                                                                              authorizator_service: authorizator_service)}
 
       before(:each) do
-        new_client_application.stub(:client_credentials => double(:get_token => oauth_access_token))
+        allow(new_client_application).to receive(:client_credentials).and_return(double(:get_token => oauth_access_token))
       end
 
       context "- Instantiation:" do
         it "To create an Authorizator::Client::Endpoints::AccessToken instance you must provide two objects: <caller_service> and <authorizator_service>" do
-          OAuth2::Client.stub(:new).and_return(new_client_application)
+          allow(OAuth2::Client).to receive(:new).and_return(new_client_application)
           expect(access_token).to be_an(Authorizator::Client::Endpoints::AccessToken)
         end
 
@@ -57,20 +54,20 @@ shared_context "access token" do
 
         it "An invalid access token error is raised if no remote access token can be obtained..." do
           invalid_client_application = double(:client_credentials => double(:get_token => nil))
-          OAuth2::Client.stub(:new).and_return(invalid_client_application)
+          allow(OAuth2::Client).to receive(:new).and_return(invalid_client_application)
           expect {Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error(Authorizator::Client::Endpoints::Response::Error::AccessToken)
         end
 
         it "... or a void one is received." do
           invalid_client_application = double(:client_credentials => double(get_token: double(token: "", params: {p1: "p1-value"}, to_hash: {})))
-          OAuth2::Client.stub(:new).and_return(invalid_client_application)
+          allow(OAuth2::Client).to receive(:new).and_return(invalid_client_application)
           expect {Authorizator::Client::Endpoints::AccessToken.new(caller_service: caller_service, authorizator_service: authorizator_service)}.to raise_error(Authorizator::Client::Endpoints::Response::Error::AccessToken, /p1-value/)
         end
       end
 
       context "- Interface" do
         before(:each) do
-          OAuth2::Client.stub(:new).and_return(new_client_application)
+          allow(OAuth2::Client).to receive(:new).and_return(new_client_application)
         end
 
         context "#caller_service" do

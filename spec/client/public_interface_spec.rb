@@ -1,6 +1,3 @@
-require 'spec_helper'
-
-
 shared_context 'public interface' do
 
   describe 'Beside endpoints methods that return data from an associated endpoint, other method can be part of the public

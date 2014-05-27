@@ -1,6 +1,3 @@
-require 'spec_helper'
-
-
 shared_context '#talking_token:' do
 
   context '#talking_token:' do
@@ -17,15 +14,15 @@ shared_context '#talking_token:' do
     shared_examples "an invalid data response..." do |title|
       it title do
         allow_message_expectations_on_nil
-        access_token.stub(:get).with(talking_token_endpoint_path).and_return(subject)
-        subject.stub(:parsed).and_return(subject)
+        allow(access_token).to receive(:get).with(talking_token_endpoint_path).and_return(subject)
+        allow(subject).to receive(:parsed).and_return(subject)
         expect {authorizator_client.talking_token}.to raise_error(Authorizator::Client::Endpoints::Response::Error::Data)
       end
     end
 
     it 'returns valid token data for the ideas4all services to be able to talk to each other.' do
-      access_token.stub(:get).with(talking_token_endpoint_path).and_return(valid_talking_token_data)
-      valid_talking_token_data.stub(:parsed).and_return(valid_talking_token_data)
+      allow(access_token).to receive(:get).with(talking_token_endpoint_path).and_return(valid_talking_token_data)
+      allow(valid_talking_token_data).to receive(:parsed).and_return(valid_talking_token_data)
       expect(authorizator_client).to                 respond_to(:talking_token)
       expect(authorizator_client.private_methods).to include(:talking_token_endpoint)
       expect(authorizator_client.talking_token).to   eq(valid_talking_token_data)

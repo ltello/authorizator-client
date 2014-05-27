@@ -1,6 +1,3 @@
-require 'spec_helper'
-
-
 shared_context "as a maintainer:" do
 
   describe "Run README_FOR_USERS test to learn the goals of this gem for a user!

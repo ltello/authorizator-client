@@ -1,6 +1,3 @@
-require 'spec_helper'
-
-
 shared_context '#services:' do
 
   context '#services:' do
@@ -14,15 +11,15 @@ shared_context '#services:' do
 
     shared_examples "an invalid data response..." do |title|
       it title do
-        access_token.stub(:get).with(services_endpoint_path).and_return(subject)
-        subject.stub(:parsed).and_return(subject)
+        allow(access_token).to receive(:get).with(services_endpoint_path).and_return(subject)
+        allow(subject).to receive(:parsed).and_return(subject)
         expect {authorizator_client.services}.to raise_error(Authorizator::Client::Endpoints::Response::Error::Data)
       end
     end
 
     it 'returns a list of ideas4all services data secured by the Authorizator service.' do
-      access_token.stub(:get).with(services_endpoint_path).and_return(valid_services_data)
-      valid_services_data.stub(:parsed).and_return(valid_services_data)
+      allow(access_token).to receive(:get).with(services_endpoint_path).and_return(valid_services_data)
+      allow(valid_services_data).to receive(:parsed).and_return(valid_services_data)
       expect(authorizator_client).to                 respond_to(:services)
       expect(authorizator_client.private_methods).to include(:services_endpoint)
       expect(authorizator_client.services).to        eq(valid_services_data['services'])
