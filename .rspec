@@ -1,4 +1,5 @@
 --color
 --format documentation
+--require byebug
 --require spec_helper
 --pattern spec/*_spec.rb
