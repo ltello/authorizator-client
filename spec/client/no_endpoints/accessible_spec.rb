@@ -44,6 +44,11 @@ shared_context '#accessible:' do
         allow(authorizator_service).to receive(:site).and_return(working_no_authorizator_service_site)
         expect(authorizator_client.accessible?).to be(false)
       end
+
+      it "- when the request to the Authorizator host raises any kind of exception." do
+        allow(authorizator_service).to receive(:access_token).and_raise
+        expect(authorizator_client.accessible?).to be(false)
+      end
     end
 
   end
