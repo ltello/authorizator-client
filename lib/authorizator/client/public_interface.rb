@@ -11,6 +11,13 @@ module Authorizator
       # Basically these methods will call one/some endpoint method/s and do some processing before
       # returning a result.
 
+      # Checks that the Authorizator Service url is reachable.
+      #
+      # @return [Boolean]
+      def accessible?
+        services rescue (return false)
+        true
+      end
     end
 
   end
