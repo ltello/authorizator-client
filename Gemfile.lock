@@ -47,7 +47,7 @@ PLATFORMS
 
 DEPENDENCIES
   authorizator-client!
-  bundler (~> 1.5)
+  bundler (~> 1.6)
   byebug (~> 3.1)
   rake (~> 10.1.1)
   rspec (= 3.0.0.rc1)
