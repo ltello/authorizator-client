@@ -2,4 +2,4 @@
 --format documentation
 --require byebug
 --require spec_helper
---pattern spec/*_spec.rb
+--pattern spec/README_spec.rb

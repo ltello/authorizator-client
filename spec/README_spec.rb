@@ -1,3 +1,7 @@
+require 'README_FOR_USERS_spec'
+require 'README_FOR_MAINTAINERS_spec'
+require 'client_spec'
+
 describe "The authorizator-client gem is the Ruby client to give access to the ideas4all's Authorizator service to other services. It:
               - gives the caller access to the Authorizator service's api through common Ruby modules, classes and methods.
               - communicates with the Authorizator service's api via the OAuth2 protocol,
@@ -6,4 +10,5 @@ describe "The authorizator-client gem is the Ruby client to give access to the i
 
     include_context 'as a user:'
     include_context 'as a maintainer:'
+    include_context 'client:'
 end
